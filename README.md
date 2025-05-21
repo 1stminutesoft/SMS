@@ -164,7 +164,3 @@ Fakhrul Zaki
 - Tools used: NetBeans, XAMPP, GitHub
 
 ---
-
-## 📄 License
-
-This project is open-source under the [MIT License](LICENSE).
