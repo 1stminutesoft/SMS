@@ -4,10 +4,14 @@
  */
 package dao;
 
+/*
+//Uncomment if you want to use db.properties file
 import java.io.FileInputStream;
-import java.sql.*;
 import java.util.Properties;
 import java.io.InputStream;
+*/
+
+import java.sql.*;
 
 /**
  *
@@ -61,7 +65,8 @@ public class DBUtil {
     }
 
     /*
-    // Using db.properties file
+    // Uncomment this codes if you are using db.properties file
+    
     private static String jdbcURL;
     private static String jdbcUsername;
     private static String jdbcPassword;
