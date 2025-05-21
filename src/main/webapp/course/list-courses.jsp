@@ -10,7 +10,7 @@
 
 <%
     if (session == null || session.getAttribute("user") == null) {
-        response.sendRedirect("LoginServlet?message=sessionExpired");
+        response.sendRedirect(request.getContextPath() + "/login?message=sessionExpired");
         return;
     }
 
@@ -19,6 +19,7 @@
     response.setDateHeader("Expires", 0);
 %>
 
+
 <html>
     <head>
         <title>Courses - Student Management System</title>
@@ -26,12 +27,12 @@
     </head>
     <body>
 
-        <jsp:include page="navbar.jsp" />
+        <jsp:include page="../navbar.jsp" />
 
         <div class="container mt-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Course List</h2>
-                <a href="add-course.jsp" class="btn btn-primary">➕ Add Course</a>
+                <a href="${pageContext.request.contextPath}/course/add-course.jsp" class="btn btn-primary">➕ Add Course</a>
             </div>
 
             <table class="table table-bordered table-hover">
@@ -50,8 +51,8 @@
                         <td><%= c.getTitle()%></td>
                         <td><%= c.getDescription()%></td>
                         <td>
-                            <a href="EditCourseServlet?id=<%= c.getId()%>" class="btn btn-sm btn-warning">✏️ Edit</a>
-                            <a href="DeleteCourseServlet?id=<%= c.getId()%>" class="btn btn-sm btn-danger"
+                            <a href="${pageContext.request.contextPath}/course/edit?id=<%= c.getId()%>" class="btn btn-sm btn-warning">✏️ Edit</a>
+                            <a href="${pageContext.request.contextPath}/course/delete?id=<%= c.getId()%>" class="btn btn-sm btn-danger"
                                onclick="return confirm('Are you sure you want to delete this course?');">🗑️ Delete</a>
                         </td>
                     </tr>

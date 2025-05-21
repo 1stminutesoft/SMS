@@ -10,7 +10,7 @@
 <%@ page import="model.Course" %>
 <%
     if (session == null || session.getAttribute("user") == null) {
-        response.sendRedirect("LoginServlet?message=sessionExpired");
+        response.sendRedirect(request.getContextPath() + "/login?message=sessionExpired");
         return;
     }
 
@@ -25,7 +25,7 @@
     </head>
     <body>
 
-        <jsp:include page="navbar.jsp" />
+        <jsp:include page="../navbar.jsp" />
 
         <div class="container mt-5">
             <h2>Student List</h2>
@@ -60,8 +60,8 @@
                     <% }%>
                 </tbody>
             </table>
-            <a href="export-students.csv" class="btn btn-success mb-3">Export to CSV</a>
-            <a href="export-students.pdf" class="btn btn-danger mb-3">Export to PDF</a>
+            <a href="${pageContext.request.contextPath}/export/students.csv" class="btn btn-success mb-3">Export to CSV</a>
+            <a href="${pageContext.request.contextPath}/export/students.pdf" class="btn btn-danger mb-3">Export to PDF</a>
         </div>
 
     </body>

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.course;
 
 import dao.StudentDAO;
 import dao.CourseDAO;
@@ -47,7 +47,7 @@ public class EnrollmentServlet extends HttpServlet {
                 }
             }
 
-            response.sendRedirect("StudentServlet");
+            response.sendRedirect(request.getContextPath() + "/student/list");
         } catch (Exception e) {
             throw new ServletException(e);
         }
@@ -62,7 +62,7 @@ public class EnrollmentServlet extends HttpServlet {
             request.setAttribute("listStudents", students);
             request.setAttribute("listCourses", courses);
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("enroll-student.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("student/enroll-student.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
             throw new ServletException(e);

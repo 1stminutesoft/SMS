@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.course;
 
 import dao.CourseDAO;
 import model.Course;
@@ -35,15 +35,15 @@ public class EditCourseServlet extends HttpServlet {
 
             if (course != null) {
                 request.setAttribute("course", course);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("edit-course.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/course/edit-course.jsp");
                 dispatcher.forward(request, response);
             } else {
-                response.sendRedirect("CourseServlet?error=notfound");
+                response.sendRedirect(request.getContextPath() + "/course/list?error=notfound");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("CourseServlet?error=invalidid");
+            response.sendRedirect("/course/list?error=invalidid");
         }
     }
 }

@@ -7,7 +7,7 @@
     }
 
     if (user == null || !"admin".equalsIgnoreCase(user.getRole())) {
-        response.sendRedirect("LoginServlet?message=unauthorized");
+        response.sendRedirect(request.getContextPath() +"/login?message=unauthorized");
         return;
     }
 
@@ -28,7 +28,7 @@
         </script>
     </head>
     <body>
-        <jsp:include page="navbar.jsp" />
+        <jsp:include page="../navbar.jsp" />
 
         <div class="container mt-5">
             <h2>Register User</h2>

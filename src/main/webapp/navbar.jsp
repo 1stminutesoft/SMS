@@ -23,38 +23,40 @@
 
             <% if (user == null) { %>
             <li class="nav-item">
-                <a class="nav-link" href="LoginServlet">Login</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a>
             </li>
             <% } else { %>
 
             <% if ("admin".equalsIgnoreCase(user.getRole())) { %>
             <li class="nav-item">
-                <a class="nav-link" href="AdminHome.jsp">Admin Dashboard</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/admin/AdminHome.jsp">Admin Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="StudentServlet">Manage Students</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/student/list">Manage Students</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="CourseServlet">Manage Courses</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/course/list">Manage Courses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="EnrollmentServlet">Enroll Students</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/enrollment">Enroll Students</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="register-user.jsp">Register User</a> <!-- ? only admin -->
+                <a class="nav-link" href="${pageContext.request.contextPath}/admin/register-user.jsp">Register User</a> <!-- admin-only JSP -->
             </li>
             <% } else { %>
             <li class="nav-item">
-                <a class="nav-link" href="StudentServlet">Student Dashboard</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/student/dashboard">Student Dashboard</a>
             </li>
             <% } %>
 
             <li class="nav-item">
-                <a class="nav-link" href="LogoutServlet">Logout</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a>
             </li>
             <% }%>
+
         </ul>
     </div>
 </nav>
+
 
 

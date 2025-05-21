@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.student;
 
-import dao.CourseDAO;
-import model.Course;
+import dao.StudentDAO;
+import model.Student;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,26 +19,25 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fakhr
  */
-public class CourseServlet extends HttpServlet {
+public class StudentServlet extends HttpServlet {
 
-    private CourseDAO courseDAO;
+    private StudentDAO studentDAO;
 
     @Override
     public void init() {
-        courseDAO = new CourseDAO();
+        studentDAO = new StudentDAO();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            List<Course> courses = courseDAO.selectAllCourses();
-            request.setAttribute("listCourse", courses);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("list-courses.jsp");
+            List<Student> students = studentDAO.selectAllStudents();
+            request.setAttribute("listStudent", students);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("list-students.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
             throw new ServletException(e);
         }
     }
-
 }

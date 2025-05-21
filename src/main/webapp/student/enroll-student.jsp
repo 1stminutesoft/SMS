@@ -9,7 +9,7 @@
 <%@ page import="model.Student" %>
 <%
     if (session == null || session.getAttribute("user") == null) {
-        response.sendRedirect("LoginServlet?message=sessionExpired");
+        response.sendRedirect(request.getContextPath() + "/login?message=sessionExpired");
         return;
     }
 
@@ -25,7 +25,7 @@
         <script>
             function loadCoursesForStudent(studentId) {
                 const xhr = new XMLHttpRequest();
-                xhr.open("GET", "GetEnrolledCoursesServlet?studentId=" + studentId, true);
+                xhr.open("GET", "<%= request.getContextPath()%>/enrollment/courses?studentId=" + studentId, true);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         document.getElementById("courseList").innerHTML = xhr.responseText;
@@ -45,12 +45,12 @@
     </head>
     <body>
 
-        <jsp:include page="navbar.jsp" />
+        <jsp:include page="../navbar.jsp" />
 
         <div class="container mt-5">
             <h2>Enroll Student into Courses</h2>
 
-            <form action="EnrollmentServlet" method="post">
+            <form action="${pageContext.request.contextPath}/enrollment" method="post">
                 <div class="form-group">
                     <label>Select Student:</label>
                     <select name="studentId" id="studentSelect" class="form-control" required>

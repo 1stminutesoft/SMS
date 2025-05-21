@@ -1,4 +1,4 @@
-package controller;
+package controller.course;
 
 import dao.EnrollmentDAO;
 import dao.CourseDAO;

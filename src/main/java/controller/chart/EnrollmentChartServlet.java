@@ -1,4 +1,4 @@
-package controller;
+package controller.chart;
 
 import dao.StudentDAO;
 import model.Student;

@@ -8,7 +8,7 @@
 <%@ page import="model.User" %>
 <%
     if (session == null || session.getAttribute("user") == null) {
-        response.sendRedirect("LoginServlet?message=sessionExpired");
+        response.sendRedirect(request.getContextPath() +"/login?message=sessionExpired");
         return;
     }
 
@@ -30,7 +30,7 @@
     </head>
     <body>
 
-        <jsp:include page="navbar.jsp" />
+        <jsp:include page="../navbar.jsp" />
 
         <div class="container mt-5">
             <h2>Welcome Admin, <%= user.getName()%>!</h2>
@@ -42,13 +42,13 @@
                 <div class="col-md-6">
                     <div class="card shadow-sm p-3">
                         <h5 class="text-center">Bar Chart</h5>
-                        <img src="enrollment-chart.png" alt="Enrollment Bar Chart" class="img-fluid">
+                        <img src="${pageContext.request.contextPath}/chart/enrollment-bar.png" alt="Enrollment Bar Chart" class="img-fluid">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="card shadow-sm p-3">
                         <h5 class="text-center">Pie Chart</h5>
-                        <img src="enrollment-pie-chart.png" alt="Enrollment Pie Chart" class="img-fluid">
+                        <img src="${pageContext.request.contextPath}/chart/enrollment-pie.png" alt="Enrollment Pie Chart" class="img-fluid">
                     </div>
                 </div>
             </div>

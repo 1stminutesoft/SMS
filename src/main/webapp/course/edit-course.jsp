@@ -9,7 +9,7 @@
 
 <%
     if (session == null || session.getAttribute("user") == null) {
-        response.sendRedirect("LoginServlet?message=sessionExpired");
+        response.sendRedirect(request.getContextPath() + "/login?message=sessionExpired");
         return;
     }
 
@@ -17,7 +17,7 @@
     String error = (String) request.getAttribute("error");
 
     if (course == null) {
-        response.sendRedirect("CourseServlet?error=notfound");
+        response.sendRedirect(request.getContextPath() + "/course/list?error=notfound");
         return;
     }
 
@@ -33,7 +33,7 @@
     </head>
     <body>
 
-        <jsp:include page="navbar.jsp" />
+        <jsp:include page="../navbar.jsp" />
 
         <div class="container mt-5">
             <h2>Edit Course</h2>
@@ -42,7 +42,7 @@
             <div class="alert alert-danger"><%= error%></div>
             <% }%>
 
-            <form action="UpdateCourseServlet" method="post">
+            <form action="${pageContext.request.contextPath}/course/update" method="post">
                 <input type="hidden" name="id" value="<%= course.getId()%>">
                 <div class="form-group">
                     <label>Course Title:</label>
@@ -54,7 +54,7 @@
                     <textarea name="description" class="form-control" rows="4"><%= course.getDescription() != null ? course.getDescription() : ""%></textarea>
                 </div>
                 <button type="submit" class="btn btn-warning">Update</button>
-                <a href="CourseServlet" class="btn btn-secondary">Cancel</a>
+                <a href="${pageContext.request.contextPath}/course/list" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
 

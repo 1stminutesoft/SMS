@@ -31,6 +31,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
@@ -40,13 +41,21 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
 
+            //Redirect based on role
             if ("admin".equalsIgnoreCase(user.getRole())) {
-                response.sendRedirect("AdminHome.jsp");
+                response.sendRedirect(request.getContextPath() + "/admin/AdminHome.jsp");
+            } else if ("student".equalsIgnoreCase(user.getRole())) {
+                response.sendRedirect(request.getContextPath() + "/student/dashboard");
             } else {
-                response.sendRedirect("StudentServlet");
+                //Unrecognized role
+                response.sendRedirect(request.getContextPath() + "/login?error=unauthorized");
             }
+
         } else {
+            //Login failed
             request.setAttribute("error", "Invalid Email or Password");
+
+            //Forward to secured JSP
             RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
             dispatcher.forward(request, response);
         }
@@ -55,11 +64,9 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String message = request.getParameter("message");
-        if ("sessionExpired".equals(message)) {
-            request.setAttribute("error", "Your session has expired. Please login again.");
-        }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+
+        //message handled in JSP via request.getParameter("message")
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
         dispatcher.forward(request, response);
     }
 }

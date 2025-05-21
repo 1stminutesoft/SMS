@@ -10,7 +10,7 @@
 
 <%
     if (session == null || session.getAttribute("user") == null) {
-        response.sendRedirect("LoginServlet?message=sessionExpired");
+        response.sendRedirect(request.getContextPath() + "/login?message=sessionExpired");
         return;
     }
 
@@ -29,7 +29,7 @@
     </head>
     <body>
 
-        <jsp:include page="navbar.jsp" />
+        <jsp:include page="../navbar.jsp" />
 
         <div class="container mt-5">
             <h2>Add New Course</h2>
@@ -38,7 +38,7 @@
             <div class="alert alert-danger"><%= error%></div>
             <% }%>
 
-            <form action="AddCourseServlet" method="post">
+            <form action="${pageContext.request.contextPath}/course/add" method="post">
                 <div class="form-group">
                     <label>Course Title:</label>
                     <input type="text" name="title" class="form-control"
@@ -49,7 +49,7 @@
                     <textarea name="description" class="form-control" rows="4"><%= prefill != null ? prefill.getDescription() : ""%></textarea>
                 </div>
                 <button type="submit" class="btn btn-success">Save Course</button>
-                <a href="CourseServlet" class="btn btn-secondary">Cancel</a>
+                <a href="${pageContext.request.contextPath}/course/list" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
 

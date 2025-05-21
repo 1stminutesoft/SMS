@@ -1,4 +1,4 @@
-package controller;
+package controller.course;
 
 import dao.CourseDAO;
 import model.Course;
@@ -34,11 +34,11 @@ public class AddCourseServlet extends HttpServlet {
         boolean success = courseDAO.insertCourse(newCourse);
 
         if (success) {
-            response.sendRedirect("CourseServlet");
+            response.sendRedirect(request.getContextPath() + "/course/list");
         } else {
             request.setAttribute("error", "A course with the same title already exists.");
-            request.setAttribute("prefill", newCourse); // optional: reuse form data
-            RequestDispatcher dispatcher = request.getRequestDispatcher("add-course.jsp");
+            request.setAttribute("prefill", newCourse); 
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/course/add-course.jsp");
             dispatcher.forward(request, response);
         }
     }

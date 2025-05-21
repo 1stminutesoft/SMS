@@ -5,6 +5,15 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+    response.setDateHeader("Expires", 0); // Proxies.
+
+    String message = request.getParameter("message");
+    String error = (String) request.getAttribute("error");
+%>
+
 <html>
     <head>
         <title>Login - Student Management System</title>
@@ -14,30 +23,35 @@
 
         <jsp:include page="navbar.jsp" />
 
-        <div class="container mt-5">
-            <h2>Login</h2>
+        <div class="container mt-5" style="max-width: 500px;">
+            <h2 class="mb-4">Login</h2>
 
-            <% if (request.getAttribute("error") != null) {%>
-            <div class="alert alert-danger">
-                <%= request.getAttribute("error")%>
-            </div>
+            <% if ("sessionExpired".equals(message)) { %>
+            <div class="alert alert-warning">Your session has expired. Please login again.</div>
+            <% } else if ("logout".equals(message)) { %>
+            <div class="alert alert-info">You have been logged out successfully.</div>
+            <% } %>
+
+            <% if (error != null) {%>
+            <div class="alert alert-danger"><%= error%></div>
             <% }%>
 
-            <form action="LoginServlet" method="post" class="mt-3">
+            <form action="login" method="post" autocomplete="off">
                 <div class="form-group">
                     <label>Email address</label>
-                    <input type="email" name="email" required class="form-control" />
+                    <input type="email" name="email" required class="form-control" autocomplete="off" />
                 </div>
 
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" required class="form-control" />
+                    <input type="password" name="password" required class="form-control" autocomplete="off" />
                 </div>
 
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
         </div>
 
     </body>
 </html>
+
 

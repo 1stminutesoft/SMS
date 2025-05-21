@@ -11,13 +11,13 @@ public class StudentDAO {
 
     public List<Student> selectAllStudents() {
         List<Student> students = new ArrayList<>();
-        String sql = "SELECT s.id AS student_id, u.name, u.email " +
-                     "FROM students s " +
-                     "JOIN users u ON s.user_id = u.id " +
-                     "WHERE u.role = 'student'";
+        String sql = "SELECT s.id AS student_id, u.name, u.email "
+                + "FROM students s "
+                + "JOIN users u ON s.user_id = u.id "
+                + "WHERE u.role = 'student'";
 
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -35,14 +35,14 @@ public class StudentDAO {
         return students;
     }
 
-    private List<Course> getCoursesByStudentId(int studentId) {
+    public List<Course> getCoursesByStudentId(int studentId) {
         List<Course> courses = new ArrayList<>();
-        String sql = "SELECT c.id, c.title, c.description FROM courses c " +
-                     "JOIN enrollments e ON c.id = e.course_id " +
-                     "WHERE e.student_id = ?";
+        String sql = "SELECT c.id, c.title, c.description FROM courses c "
+                + "JOIN enrollments e ON c.id = e.course_id "
+                + "WHERE e.student_id = ?";
 
         try (Connection connection = DBUtil.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+                PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, studentId);
             ResultSet rs = ps.executeQuery();
@@ -62,7 +62,7 @@ public class StudentDAO {
     public void insertStudent(int userId, String studentNumber) {
         String sql = "INSERT INTO students (user_id, student_number) VALUES (?, ?)";
         try (Connection connection = DBUtil.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+                PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, userId);
             ps.setString(2, studentNumber);
@@ -75,7 +75,7 @@ public class StudentDAO {
     public int findUserIdByEmail(String email) {
         String sql = "SELECT id FROM users WHERE email = ?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
@@ -87,5 +87,22 @@ public class StudentDAO {
             e.printStackTrace();
         }
         return -1; // not found
+    }
+
+    public int findStudentIdByUserId(int userId) {
+        String sql = "SELECT id FROM students WHERE user_id = ?";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1; // Not found
     }
 }
