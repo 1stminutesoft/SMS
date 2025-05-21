@@ -34,7 +34,7 @@ This project supports role-based access (Admin & Student), course management, en
 ### 👨‍🎓 Student
 
 - Role-based session and navigation
-- View available courses and enrollments
+- View registered courses
 
 ### 📊 Charts
 
@@ -52,14 +52,35 @@ This project supports role-based access (Admin & Student), course management, en
 
 ```
 StudentManagement/
-├── src/
-│   ├── controller/       # Servlets
-│   ├── dao/              # Data Access Objects
-│   ├── model/            # JavaBeans (User, Course, Student)
-├── web/
-│   ├── *.jsp             # Web pages
+├── Web Pages/
+│   ├── index.jsp
+│   ├── login.jsp
 │   ├── navbar.jsp
-│   └── WEB-INF/web.xml   # Servlet configuration
+│   ├── admin/
+│   │   └── AdminHome.jsp, register-user.jsp
+│   ├── course/
+│   │   └── add-course.jsp, edit-course.jsp, list-courses.jsp
+│   ├── student/
+│   │   └── enroll-student.jsp, list-students.jsp, dashboard.jsp
+│   └── WEB-INF/
+│       ├── web.xml
+├── Source Packages/
+│   ├── controller/
+│   │   ├── LoginServlet.java, LogoutServlet.java, RegisterUserServlet.java
+│   │   ├── controller.course/
+│   │   │   └── AddCourseServlet, EditCourseServlet, etc.
+│   │   ├── controller.student/
+│   │   │   └── StudentDashboardServlet, ExportStudentCSVServlet, etc.
+│   │   └── controller.chart/
+│   │       └── EnrollmentChartServlet, EnrollmentPieChartServlet
+│   ├── dao/
+│   │   └── UserDAO.java, StudentDAO.java, CourseDAO.java, DBUtil.java
+│   └── model/
+│       └── User.java, Student.java, Course.java
+├── db/
+│   └── studentdb.sql
+├── db.properties (excluded via .gitignore)
+└── README.md
 ```
 
 ---
@@ -105,7 +126,16 @@ jdbc.password=yourpassword
 - Visit: [http://localhost:8080/StudentManagement](http://localhost:8080/StudentManagement)
 
 ---
+## 📸 Screenshots
 
+### Admin Dashboard
+![AdminDashboard](AdminDashboard.png)
+
+### Course List
+![CourseList](CourseList.png)
+
+- username/password:`admin@admin.com/123456`,`azrul@student.com/123456`
+---
 ## 🔒 Security Notes
 
 - Passwords are hashed using **Argon2** before storage.
@@ -116,16 +146,20 @@ jdbc.password=yourpassword
 
 ## 📤 Export Features
 
-- `/export-students.csv` — CSV export of student list
-- `/export-students.pdf` — PDF export with embedded chart
-- `/enrollment-chart.png` — Bar chart
-- `/enrollment-pie-chart.png` — Pie chart
+- `/export/students.csv` — CSV export of student list
+- `/export/students.pdf` — PDF export with embedded chart
+- `/chart/enrollment-bar.png` — Bar chart
+- `/chart/enrollment-pie.png` — Pie chart
 
 ---
 
-## 🙏 Credits
+## 📌 Notes
+- `db.properties` is excluded from Git for security.
+- Uses `request.getContextPath()` for portability.
+- Protected pages require login session.
 
-- Prepared by Fakhrul Zaki  
+## 👨‍💻 Author
+Fakhrul Zaki  
 [LinkedIn](https://www.linkedin.com/in/fakhrul-adli-mohd-zaki-135b83344)
 - Tools used: NetBeans, XAMPP, GitHub
 
