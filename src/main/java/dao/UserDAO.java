@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import model.User;
@@ -13,6 +9,7 @@ import de.mkammerer.argon2.Argon2Factory;
  *
  * @author fakhr
  */
+
 public class UserDAO {
 
     public User checkLogin(String email, String password) {
@@ -23,14 +20,15 @@ public class UserDAO {
         System.out.println("[DEBUG] With email: " + email);
 
         try (Connection connection = DBUtil.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 String hashedPassword = rs.getString("password");
-                Argon2 argon2 = Argon2Factory.create();
+                // Explicitly use Argon2i to match stored hashes
+                Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2i);
 
                 if (argon2.verify(hashedPassword, password.toCharArray())) {
                     int id = rs.getInt("id");
@@ -53,7 +51,7 @@ public class UserDAO {
     public void insertUser(User user) {
         String sql = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBUtil.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -68,14 +66,15 @@ public class UserDAO {
     }
 
     public String hashPassword(String plainPassword) {
-        Argon2 argon2 = Argon2Factory.create();
+        // Consistent hashing using Argon2i
+        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2i);
         return argon2.hash(2, 65536, 1, plainPassword.toCharArray());
     }
 
     public int findUserIdByEmail(String email) {
         String sql = "SELECT id FROM users WHERE email = ?";
         try (Connection conn = DBUtil.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
@@ -88,5 +87,4 @@ public class UserDAO {
         }
         return -1; // not found
     }
-
 }
