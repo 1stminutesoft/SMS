@@ -56,7 +56,7 @@ public class RegisterUserServlet extends HttpServlet {
         }
 
         // Redirect to login or admin dashboard
-        response.sendRedirect("admin/AdminHome.jsp");
+        response.sendRedirect(request.getContextPath() + "/admin/AdminHome.jsp");
     }
 
     private String generateStudentNumber(int userId) {

@@ -33,7 +33,7 @@
         <div class="container mt-5">
             <h2>Register User</h2>
 
-            <form method="post" action="RegisterUserServlet"  autocomplete="off">
+            <form method="post" action="${pageContext.request.contextPath}/admin/register"  autocomplete="off">
                 <div class="form-group">
                     <label>Full Name:</label>
                     <input type="text" name="name" required class="form-control" autocomplete="off">

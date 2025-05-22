@@ -4,12 +4,12 @@ import model.User;
 import java.sql.*;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
+import java.util.Arrays;
 
 /**
  *
  * @author fakhr
  */
-
 public class UserDAO {
 
     public User checkLogin(String email, String password) {
@@ -19,16 +19,23 @@ public class UserDAO {
         System.out.println("[DEBUG] Running SQL: " + sql);
         System.out.println("[DEBUG] With email: " + email);
 
-        try (Connection connection = DBUtil.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection connection = DBUtil.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 String hashedPassword = rs.getString("password");
-                // Explicitly use Argon2i to match stored hashes
+
                 Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2i);
+                
+                System.out.println("Password bytes: " + Arrays.toString(password.toCharArray()));    
+                System.out.println("Entered password: " + password);
+                System.out.println("Hash from DB: " + hashedPassword);
+                System.out.println("Argon2 type: " + argon2.toString());
+
+                boolean match = argon2.verify(hashedPassword, password.toCharArray());
+                System.out.println("Password match? " + match);
 
                 if (argon2.verify(hashedPassword, password.toCharArray())) {
                     int id = rs.getInt("id");
@@ -50,8 +57,7 @@ public class UserDAO {
 
     public void insertUser(User user) {
         String sql = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBUtil.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -73,8 +79,7 @@ public class UserDAO {
 
     public int findUserIdByEmail(String email) {
         String sql = "SELECT id FROM users WHERE email = ?";
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBUtil.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
