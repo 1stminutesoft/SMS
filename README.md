@@ -74,7 +74,7 @@ StudentManagement/
 │   │   │   └── StudentDashboardServlet, ExportStudentCSVServlet, etc.
 │   │   ├── controller.chart/
 │   │   │   └── EnrollmentChartServlet, EnrollmentPieChartServlet
-│   │   └── InitDataServlet.java 
+│   │   └── InitDataServlet.java ✅
 │   ├── dao/
 │   │   └── UserDAO.java, StudentDAO.java, CourseDAO.java, DBUtil.java
 │   └── model/
@@ -136,15 +136,16 @@ You can also configure database settings via system environment variables:
 
 ---
 
-### 5. Initialize Passwords (IMPORTANT)
 
+### 5. Initialize Passwords (IMPORTANT)
 To ensure the default users (e.g. admin/student) work with Argon2 hashes, run this URL in your browser before first login:
 
-🔗 [http://localhost:8080/setup/init-data?token=secret123](http://localhost:8080/setup/init-data?token=secret123)
+🔗 http://localhost:8080/setup/init-data?token=secret123
 
 This updates their passwords to `123456` using your backend's hashing logic.
 
----
+💡 **Tip**: You may change the default password (`123456`) by editing the `InitDataServlet.java` file.
+
 
 ### 6. Deploy & Run
 
