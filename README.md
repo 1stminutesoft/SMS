@@ -1,3 +1,4 @@
+
 # 🎓 Student Management System (JSP & Servlets)
 
 A simple web-based Student Management System built using **Java EE (JSP & Servlets)**, styled with **Bootstrap**, and powered by a **MySQL** backend.
@@ -71,8 +72,9 @@ StudentManagement/
 │   │   │   └── AddCourseServlet, EditCourseServlet, etc.
 │   │   ├── controller.student/
 │   │   │   └── StudentDashboardServlet, ExportStudentCSVServlet, etc.
-│   │   └── controller.chart/
-│   │       └── EnrollmentChartServlet, EnrollmentPieChartServlet
+│   │   ├── controller.chart/
+│   │   │   └── EnrollmentChartServlet, EnrollmentPieChartServlet
+│   │   └── InitDataServlet.java 
 │   ├── dao/
 │   │   └── UserDAO.java, StudentDAO.java, CourseDAO.java, DBUtil.java
 │   └── model/
@@ -105,11 +107,14 @@ Ensure the following libraries are added to your project:
 - `jfreechart.jar`
 - `argon2-jvm.jar` (or use Maven)
 
+
 ### 4. Configure MySQL
 
 - Create a database named `studentdb`
 - Run the SQL dump: `studentdb.sql` [`db/studentdb.sql`](db/studentdb.sql) to create tables and sample data.
-- Set your DB credentials in `db.properties`:
+
+#### Option A: Edit `db.properties`
+Update the file with your actual MySQL credentials:
 
 ```properties
 jdbc.url=jdbc:mysql://localhost:3306/studentdb
@@ -117,15 +122,38 @@ jdbc.username=databaseuser
 jdbc.password=yourpassword
 ```
 
+#### Option B: Use Environment Variables (No Code Changes)
+You can also configure database settings via system environment variables:
+
+- `DB_URL`
+- `DB_USER`
+- `DB_PASS`
+
+✅ If these environment variables are present, you do **not** need to modify the `DBUtil.java` file.
+
+
 🚫 **Note**: This file is ignored by Git using .gitignore and should be stored in a secure, non-public location.
 
-### 5. Deploy & Run
+---
+
+### 5. Initialize Passwords (IMPORTANT)
+
+To ensure the default users (e.g. admin/student) work with Argon2 hashes, run this URL in your browser before first login:
+
+🔗 [http://localhost:8080/setup/init-data?token=secret123](http://localhost:8080/setup/init-data?token=secret123)
+
+This updates their passwords to `123456` using your backend's hashing logic.
+
+---
+
+### 6. Deploy & Run
 
 - Clean and build the project
 - Deploy via NetBeans Tomcat or GlassFish
 - Visit: [http://localhost:8080/StudentManagement](http://localhost:8080/StudentManagement)
 
 ---
+
 ## 📸 Screenshots
 
 ### Admin Dashboard
@@ -134,8 +162,12 @@ jdbc.password=yourpassword
 ### Course List
 ![CourseList](CourseList.png)
 
-- username/password:`admin@admin.com/123456`,`azrul@student.com/123456`
+🧪 Default logins:  
+- Admin: `admin@admin.com` / `123456`  
+- Student: `azrul@student.com` / `123456`
+
 ---
+
 ## 🔒 Security Notes
 
 - Passwords are hashed using **Argon2** before storage.
@@ -158,9 +190,9 @@ jdbc.password=yourpassword
 - Uses `request.getContextPath()` for portability.
 - Protected pages require login session.
 
+---
+
 ## 👨‍💻 Author
+
 Fakhrul Zaki  
 [LinkedIn](https://www.linkedin.com/in/fakhrul-adli-mohd-zaki-135b83344)
-- Tools used: NetBeans, XAMPP, GitHub
-
----
