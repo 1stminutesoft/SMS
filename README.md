@@ -140,7 +140,7 @@ You can also configure database settings via system environment variables:
 ### 5. Initialize Passwords (IMPORTANT)
 To ensure the default users (e.g. admin/student) work with Argon2 hashes, run this URL in your browser before first login:
 
-🔗 http://localhost:8080/setup/init-data?token=secret123
+🔗 http://localhost:8080/StudentManagement/setup/init-data?token=secret123
 
 This updates their passwords to `123456` using your backend's hashing logic.
 
