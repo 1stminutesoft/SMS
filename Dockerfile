@@ -1,4 +1,4 @@
-# Stage 1: Build WAR using Maven
+# Stage 1: Build WAR using Maven. This dockerfile has been optimized
 FROM maven:3.9.4-eclipse-temurin-17 AS build
 
 WORKDIR /app
